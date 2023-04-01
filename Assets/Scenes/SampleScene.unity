@@ -176,7 +176,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7.7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -200,7 +200,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 273822860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 10, y: -6, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -238,8 +238,10 @@ MonoBehaviour:
   Pavimento: {fileID: 2018031090961895891, guid: 5c862e8d6d87fd2429934650e9be0b29, type: 3}
   Muro_Indistruttibile: {fileID: 7148327753480190382, guid: fa202bc014282cc488faa1c1010c435d, type: 3}
   Ostacolo: {fileID: 470100725833365496, guid: dfca9af40ee941e439037eec54d2eadb, type: 3}
-  quantita_ostacoli_minima: 10
-  quantita_ostacoli_massima: 13
+  quantita_ostacoli_minima: 12
+  quantita_ostacoli_massima: 15
+  Giocatore: {fileID: 8116432295702884820, guid: f5cfbbb8676d4d2489ab05ea651e437c, type: 3}
+  PosizioneSpawn: {x: 1, y: 1}
 --- !u!4 &1151867353
 Transform:
   m_ObjectHideFlags: 0
