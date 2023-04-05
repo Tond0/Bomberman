@@ -28,7 +28,7 @@ public class GridManager : MonoBehaviour
     ////////////////////////////////////////
     public static GridManager instance;
 
-    void OnAwake()
+    void OnEnable()
     {
         if (instance == null)
         {
@@ -150,9 +150,12 @@ public class GridManager : MonoBehaviour
         return posEstratte;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DistruzioneMuro(int x, int y, GameObject raccoglitore)
     {
-        
+        Destroy(GrigliaOggetti[x, y]);
+        GameObject tassello = Instantiate(GrigliaOggetti[x,y], GrigliaPosizioni[x,y], Quaternion.identity);
+        tassello.transform.SetParent(raccoglitore.transform);
+        tassello.name = x + " : " + y;
+
     }
 }

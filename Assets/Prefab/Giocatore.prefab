@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8116432295702884823}
   m_Layer: 0
   m_Name: Giocatore
-  m_TagString: Untagged
+  m_TagString: bombabile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,6 +125,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 542ccf53-267b-4868-b62a-a6bd7f1018a5
     m_ActionName: Gameplay/Movimento[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8116432295702884823}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Raccolta_Input_PlaceBomb
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4e1496bb-c0e5-4b01-afbd-3bb0361ca6d2
+    m_ActionName: Gameplay/PlaceBomb[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -142,9 +158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 337178d03b87e06459ba6b7a40d89fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  movimento: {x: 0, y: 0}
-  destinazione: {x: 0, y: 0}
+  speed: 8
   griglia: {fileID: 0}
-  x: 0
-  y: 0
+  bombaPrefab: {fileID: 6248334510128359422, guid: e4ff17aea7a77b0448b708ed1566b407, type: 3}
