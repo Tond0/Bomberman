@@ -235,11 +235,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0941aad06d497924da6237723373d8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pavimento: {fileID: 2018031090961895891, guid: 5c862e8d6d87fd2429934650e9be0b29, type: 3}
-  Muro_Indistruttibile: {fileID: 7148327753480190382, guid: fa202bc014282cc488faa1c1010c435d, type: 3}
-  Ostacolo: {fileID: 470100725833365496, guid: dfca9af40ee941e439037eec54d2eadb, type: 3}
-  quantita_ostacoli_minima: 10
-  quantita_ostacoli_massima: 13
+  Tile: {fileID: 388759571026480937, guid: 474a31d75985f50459ae29a164b762cf, type: 3}
+  quantita_ostacoli_minima: 15
+  quantita_ostacoli_massima: 15
   Giocatore: {fileID: 8116432295702884820, guid: f5cfbbb8676d4d2489ab05ea651e437c, type: 3}
   PosizioneSpawn: {x: 1, y: 1}
 --- !u!4 &1151867353

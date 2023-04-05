@@ -8,9 +8,7 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     [Header("Impostazioni Mappa")]
-    public GameObject Pavimento;
-    public GameObject Muro_Indistruttibile;
-    public GameObject Ostacolo;
+    public GameObject Tile;
 
     [SerializeField] private int quantita_ostacoli_minima;
     [SerializeField] private int quantita_ostacoli_massima;
@@ -18,12 +16,12 @@ public class GridManager : MonoBehaviour
     private const int colonne = 21;
     private const int righe = 13;
 
-    public GameObject[,] GrigliaOggetti = new GameObject[colonne, righe];
+    public Tile.TileType[,] GrigliaTile = new Tile.TileType[colonne, righe];
     public Vector3[,] GrigliaPosizioni = new Vector3[colonne, righe];
 
     [Header("Impostazioni Giocatore")]
     [SerializeField] private GameObject Giocatore;
-    [Tooltip("La posizione della matrice in cui il giocatore spawnerà")] public Vector2 PosizioneSpawn;
+    [Tooltip("La posizione della matrice in cui il giocatore spawnerà")] public Vector2Int PosizioneSpawn;
 
     ////////////////////////////////////////
     public static GridManager instance;
@@ -46,37 +44,31 @@ public class GridManager : MonoBehaviour
     {
         CreazioneMappa();
 
-        StampaMatrice();
+        StampaMappa();
 
         SpawnGiocatore();
     }
 
-    void SpawnGiocatore()
-    {
-        GameObject player = Instantiate(Giocatore, GrigliaPosizioni[(int)PosizioneSpawn.x, (int)PosizioneSpawn.y], Quaternion.identity);
-        player.GetComponent<Player>().griglia = this;
 
-        GrigliaOggetti[(int)PosizioneSpawn.x, (int)PosizioneSpawn.y] = player;
-    }
-
-    //Gira la matrice scorrendo prima le righe
-    void StampaMatrice()
+    void StampaMappa()
     {
         for(int i = 0; i < righe; i++)
         {
-            GameObject raccoglitore = new GameObject();
-            raccoglitore.name = "Riga " + i;
-            raccoglitore.transform.SetParent(transform);
-
             for(int j = 0; j < colonne; j++)
             {
-                GameObject tassello = Instantiate(GrigliaOggetti[j,i], new Vector2(j, -i), Quaternion.identity);
-                tassello.transform.SetParent(raccoglitore.transform);
-                tassello.name = i + " : " + j;
-
-                GrigliaPosizioni[j, i] = new Vector2(j, -i);
+                GameObject tile = Instantiate(Tile, new Vector2(j, -i), Quaternion.identity);
+                tile.GetComponent<Tile>().tileType = GrigliaTile[j, i];
             }
         }
+    }
+
+    void SpawnGiocatore()
+    {
+        GameObject player = Instantiate(Giocatore, new Vector2(PosizioneSpawn.x, - PosizioneSpawn.y), Quaternion.identity);
+        
+        player.GetComponent<Player>().griglia = this;
+
+        GrigliaTile[PosizioneSpawn.x, PosizioneSpawn.y] = global::Tile.TileType.Player;
     }
 
     void CreazioneMappa()
@@ -87,12 +79,16 @@ public class GridManager : MonoBehaviour
             
             int indice = 0;
 
+            GameObject raccoglitore = new GameObject();
+            raccoglitore.name = "Riga " + i;
+            raccoglitore.transform.SetParent(transform);
+
             for (int j = 0; j < colonne; j++)
             {
                 if (i == 0 || j == 0 || i == righe - 1 || j == colonne - 1
                     || j % 2 == 0 && i % 2 == 0)
                 {
-                    GrigliaOggetti[j, i] = Muro_Indistruttibile;
+                    GrigliaTile[j, i] = global::Tile.TileType.Muro_Indistruttibile;
                 }
                 else
                 {
@@ -103,13 +99,14 @@ public class GridManager : MonoBehaviour
                         i - j < (righe - 1) - 3 && //Eccetto l'angolo in basso a sinistra
                         i + j < (colonne - 1) + (righe - 1) - 3) //Eccetto l'angolo in basso a destra
                     {
-                        GrigliaOggetti[j, i] = Ostacolo;
+                        GrigliaTile[j, i] = global::Tile.TileType.Muro_Distruttibile;
                     }
                     else
                     {
-                        GrigliaOggetti[j, i] = Pavimento;
+                        GrigliaTile[j, i] = global::Tile.TileType.Pavimento;
                     }
                 }
+
                 if (posEstratte[indice] == j && indice < posEstratte.Length - 1)
                     indice++;
             }
@@ -150,12 +147,8 @@ public class GridManager : MonoBehaviour
         return posEstratte;
     }
 
-    public void DistruzioneMuro(int x, int y, GameObject raccoglitore)
+    public void ResetPavimento(int x, int y)
     {
-        Destroy(GrigliaOggetti[x, y]);
-        GameObject tassello = Instantiate(GrigliaOggetti[x,y], GrigliaPosizioni[x,y], Quaternion.identity);
-        tassello.transform.SetParent(raccoglitore.transform);
-        tassello.name = x + " : " + y;
-
+        //GrigliaTile[x, y].SetActive(false);
     }
 }

@@ -41,29 +41,23 @@ public class bomba : MonoBehaviour
         sequenzaAnimazione.Play();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     void EsplosionePazzesca()
     {
-
-        var griglia = GridManager.instance.GrigliaOggetti;
+        var griglia = GridManager.instance.GrigliaTile;
 
         for(int direzioni = 0; direzioni < 4; direzioni++)
         {
-            for(int cella = 1; cella < range; cella++)
+            for(int cella = 1; cella <  range - 1; cella++)
             {
                 switch(direzioni)
                 {
+                    /*
                     case 0:
 
-                        if (griglia[posX, posY + cella].CompareTag("bombabile"))
+                        if (griglia[posX, posY + cella].layer == LayerMask.NameToLayer("MuroDistruttibile") 
+                            || griglia[posX, posY + cella].GetComponent<Player>())
                         {
-                            GridManager.instance.DistruzioneMuro(posX, posY - cella, griglia[posX, posY - cella].transform.parent.gameObject);
-                            Destroy(griglia[posX, posY + cella]);
-                            Debug.Log(griglia[posY, posX + cella].name + " in [" + posY + " " + (posX + cella) + "]");
+                            GridManager.instance.ResetPavimento(posX, posY + cella);
                         }
                         else if (griglia[posX, posY + cella] == GridManager.instance.Muro_Indistruttibile)
                         {
@@ -73,11 +67,10 @@ public class bomba : MonoBehaviour
                         break;
                     case 1:
 
-                        if (griglia[posX, posY - cella].CompareTag("bombabile"))
+                        if (griglia[posX, posY - cella].layer == LayerMask.NameToLayer("MuroDistruttibile")
+                            || griglia[posX, posY - cella].GetComponent<Player>())
                         {
-                            GridManager.instance.DistruzioneMuro(posX, posY - cella, griglia[posX, posY - cella].transform.parent.gameObject);
-                            Debug.Log(griglia[posX, posY - cella].name + " in [" + posY + " " + (posX - cella) + "]");
-                            Destroy(griglia[posX, posY - cella]);
+                            GridManager.instance.ResetPavimento(posX, posY - cella);
                         }
                         else if (griglia[posX, posY - cella] == GridManager.instance.Muro_Indistruttibile)
                         {
@@ -86,11 +79,10 @@ public class bomba : MonoBehaviour
                         break;
                     case 2:
 
-                        if (griglia[posX + cella, posY].CompareTag("bombabile"))
+                        if (griglia[posX + cella, posY].layer == LayerMask.NameToLayer("MuroDistruttibile")
+                            || griglia[posX + cella, posY].GetComponent<Player>())
                         {
-                            GridManager.instance.DistruzioneMuro(posX + cella, posY, griglia[posX + cella, posY].transform.parent.gameObject);
-                            Destroy(griglia[posX + cella, posY]);
-                            Debug.Log(griglia[posX + cella, posY].name + " in [" + posY + cella + " " + posX + "]");
+                            GridManager.instance.ResetPavimento(posX + cella, posY);
                         }
                         else if (griglia[posX + cella, posY] == GridManager.instance.Muro_Indistruttibile)
                         {
@@ -99,22 +91,20 @@ public class bomba : MonoBehaviour
                         break;
                     case 3:
 
-                        if (griglia[posX - cella, posY].CompareTag("bombabile"))
+                        if (griglia[posX - cella, posY].layer == LayerMask.NameToLayer("MuroDistruttibile")
+                            || griglia[posX - cella, posY].GetComponent<Player>())
                         {
-                            Debug.Log(griglia[posX - cella, posY].name + " in [" + (posY - cella) + " " + posX + "]");
-                            GridManager.instance.DistruzioneMuro(posX - cella, posY, griglia[posX - cella, posY].transform.parent.gameObject);
-                            Destroy(griglia[posX - cella, posY]);
+                            GridManager.instance.ResetPavimento(posX - cella, posY);
                         }
                         else if (griglia[posX - cella, posY] == GridManager.instance.Muro_Indistruttibile)
                         {
                             cella = range;
                         }
                         break;
+                        */
                 }
             }
         }
-
-        griglia[posX, posY] = GridManager.instance.Pavimento;
         Destroy(gameObject);
     }
 }

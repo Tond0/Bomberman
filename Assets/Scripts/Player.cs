@@ -8,13 +8,13 @@ using UnityEditor;
 public class Player : MonoBehaviour
 {
     [SerializeField, Tooltip("La velocità tra una casella è l'altra")] private float speed;
-    private Vector2 movimento;
-    private Vector2 destinazione;
+    public Vector2Int movimento;
+    private Vector2Int destinazione;
 
     [HideInInspector] public GridManager griglia;
 
-    private int x;
-    private int y;
+    [SerializeField] private int x;
+    [SerializeField] private int y;
 
     private bool moving;
 
@@ -23,55 +23,55 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        x = (int)griglia.PosizioneSpawn.x;
-        y = (int)griglia.PosizioneSpawn.y;
+        x = griglia.PosizioneSpawn.x;
+        y = griglia.PosizioneSpawn.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        //Non può muoversi in diagonale
+        if(movimento.x + movimento.y <= 1 && movimento.x + movimento.y >= -1)
+            Movement();
     }
 
     void Movement()
     {
-        var GrigliaNextPos = griglia.GrigliaPosizioni[x + (int)movimento.x, y - (int)movimento.y];
+        var GrigliaNextPos = griglia.GrigliaTile[x + movimento.x, y - movimento.y];
         if (movimento != Vector2.zero && !moving && CanMoveThere())
         {
+            Debug.Log(y + movimento.y + " " + (x + movimento.x));
             moving = true;
             destinazione = movimento;
-            transform.DOMove(GrigliaNextPos, speed / 60).onComplete = SetNewPosition;
+            transform.DOMove(new Vector2(transform.position.x + movimento.x, transform.position.y + movimento.y), speed / 60).onComplete = SetNewPosition;
         }
     }
 
     bool CanMoveThere()
     {
-        var OggettoNextPosition = griglia.GrigliaOggetti[x + (int)movimento.x, y - (int)movimento.y];
+        var OggettoNextPosition = griglia.GrigliaTile[y - movimento.y, x + movimento.x];
 
-        if (OggettoNextPosition == griglia.Ostacolo || OggettoNextPosition == griglia.Muro_Indistruttibile || OggettoNextPosition.name == bombaPrefab.name)
-            return false;
-        else
+        if (OggettoNextPosition == Tile.TileType.Pavimento)
             return true;
+        else
+            return false;
     }
 
     //Aggiorniamo la griglia su dove si trova il giocatore.
     void SetNewPosition()
     {
-        //Nuova posizione del giocatore nella griglia
-        griglia.GrigliaOggetti[x + (int)destinazione.x, y - (int)destinazione.y] = gameObject;
-        //Rimettiamo il pavimento al suo posto
-        if (griglia.GrigliaOggetti[x, y].name != bombaPrefab.name)
-            griglia.GrigliaOggetti[x, y] = griglia.Pavimento;
-        //Informiamo il player della sua nuova posizione
-        x += (int)destinazione.x;
-        y -= (int)destinazione.y;
+        griglia.GrigliaTile[y, x] = Tile.TileType.Pavimento;
+        griglia.GrigliaTile[x + movimento.x, y - movimento.y] = Tile.TileType.Player;
+
+        x += destinazione.x;
+        y -= destinazione.y;
 
         moving = false;
     }
 
     public void Raccolta_Input_Movimento(InputAction.CallbackContext ctx)
     {
-        movimento = ctx.ReadValue<Vector2>();
+        movimento = Vector2Int.RoundToInt(ctx.ReadValue<Vector2>());
     }
 
     public void Raccolta_Input_PlaceBomb(InputAction.CallbackContext ctx)
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
             bomba.name = bombaPrefab.name;
             bomba.GetComponent<bomba>().posX = x;
             bomba.GetComponent<bomba>().posY = y;
-            griglia.GrigliaOggetti[x, y] = bomba;
+            griglia.GrigliaTile[x, y] = Tile.TileType.Bomba;
         }
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8116432295702884823}
   m_Layer: 0
   m_Name: Giocatore
-  m_TagString: bombabile
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
