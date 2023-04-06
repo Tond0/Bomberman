@@ -159,5 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
+  movimento: {x: 0, y: 0}
   griglia: {fileID: 0}
-  bombaPrefab: {fileID: 6248334510128359422, guid: e4ff17aea7a77b0448b708ed1566b407, type: 3}
+  x: 0
+  y: 0
+  bombaPrefab: {fileID: 7637536710966232317, guid: dc6ad63f279d29c42b220d40e2617c8c, type: 3}

@@ -30,17 +30,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Non può muoversi in diagonale
-        if(movimento.x + movimento.y <= 1 && movimento.x + movimento.y >= -1)
-            Movement();
-    }
-
-    void Movement()
-    {
-        var GrigliaNextPos = griglia.GrigliaTile[x + movimento.x, y - movimento.y];
-        if (movimento != Vector2.zero && !moving && CanMoveThere())
+        if (movimento != Vector2.zero && CanMoveThere() && !moving)
         {
-            Debug.Log(y + movimento.y + " " + (x + movimento.x));
             moving = true;
             destinazione = movimento;
             transform.DOMove(new Vector2(transform.position.x + movimento.x, transform.position.y + movimento.y), speed / 60).onComplete = SetNewPosition;
@@ -49,7 +40,9 @@ public class Player : MonoBehaviour
 
     bool CanMoveThere()
     {
-        var OggettoNextPosition = griglia.GrigliaTile[y - movimento.y, x + movimento.x];
+        var OggettoNextPosition = griglia.GrigliaTile[x + movimento.x, y - movimento.y].tileType;
+
+        Debug.Log(griglia.GrigliaTile[x + movimento.x, y - movimento.y].tileType);
 
         if (OggettoNextPosition == Tile.TileType.Pavimento)
             return true;
@@ -60,8 +53,8 @@ public class Player : MonoBehaviour
     //Aggiorniamo la griglia su dove si trova il giocatore.
     void SetNewPosition()
     {
-        griglia.GrigliaTile[y, x] = Tile.TileType.Pavimento;
-        griglia.GrigliaTile[x + movimento.x, y - movimento.y] = Tile.TileType.Player;
+        griglia.GrigliaTile[x + destinazione.x, y - destinazione.y].ChangeTile(Tile.TileType.Player);
+        griglia.GrigliaTile[x, y].ChangeTile(Tile.TileType.Pavimento);
 
         x += destinazione.x;
         y -= destinazione.y;
@@ -71,7 +64,10 @@ public class Player : MonoBehaviour
 
     public void Raccolta_Input_Movimento(InputAction.CallbackContext ctx)
     {
-        movimento = Vector2Int.RoundToInt(ctx.ReadValue<Vector2>());
+        Vector2Int appoggioCheck = Vector2Int.RoundToInt(ctx.ReadValue<Vector2>());
+
+        if (appoggioCheck.x * appoggioCheck.y == 0)
+            movimento = appoggioCheck;
     }
 
     public void Raccolta_Input_PlaceBomb(InputAction.CallbackContext ctx)
@@ -79,10 +75,9 @@ public class Player : MonoBehaviour
         if (ctx.performed)
         {
             GameObject bomba = Instantiate(bombaPrefab, transform.position, Quaternion.Euler(0, 0, 45));
-            bomba.name = bombaPrefab.name;
             bomba.GetComponent<bomba>().posX = x;
             bomba.GetComponent<bomba>().posY = y;
-            griglia.GrigliaTile[x, y] = Tile.TileType.Bomba;
+            griglia.GrigliaTile[x, y].ChangeTile(Tile.TileType.Bomba);
         }
     }
 }

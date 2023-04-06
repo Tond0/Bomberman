@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -16,7 +18,7 @@ public class GridManager : MonoBehaviour
     private const int colonne = 21;
     private const int righe = 13;
 
-    public Tile.TileType[,] GrigliaTile = new Tile.TileType[colonne, righe];
+    public Tile[,] GrigliaTile = new Tile[colonne, righe];
     public Vector3[,] GrigliaPosizioni = new Vector3[colonne, righe];
 
     [Header("Impostazioni Giocatore")]
@@ -44,22 +46,7 @@ public class GridManager : MonoBehaviour
     {
         CreazioneMappa();
 
-        StampaMappa();
-
         SpawnGiocatore();
-    }
-
-
-    void StampaMappa()
-    {
-        for(int i = 0; i < righe; i++)
-        {
-            for(int j = 0; j < colonne; j++)
-            {
-                GameObject tile = Instantiate(Tile, new Vector2(j, -i), Quaternion.identity);
-                tile.GetComponent<Tile>().tileType = GrigliaTile[j, i];
-            }
-        }
     }
 
     void SpawnGiocatore()
@@ -68,7 +55,9 @@ public class GridManager : MonoBehaviour
         
         player.GetComponent<Player>().griglia = this;
 
-        GrigliaTile[PosizioneSpawn.x, PosizioneSpawn.y] = global::Tile.TileType.Player;
+        GrigliaTile[PosizioneSpawn.y, PosizioneSpawn.x].ChangeTile(global::Tile.TileType.Player);
+
+        Debug.Log(GrigliaTile[PosizioneSpawn.y, PosizioneSpawn.x]);
     }
 
     void CreazioneMappa()
@@ -79,16 +68,16 @@ public class GridManager : MonoBehaviour
             
             int indice = 0;
 
-            GameObject raccoglitore = new GameObject();
-            raccoglitore.name = "Riga " + i;
-            raccoglitore.transform.SetParent(transform);
+            GameObject riga = new GameObject();
+            riga.name = "Riga " + i;
+            riga.transform.SetParent(transform);
 
             for (int j = 0; j < colonne; j++)
             {
                 if (i == 0 || j == 0 || i == righe - 1 || j == colonne - 1
                     || j % 2 == 0 && i % 2 == 0)
                 {
-                    GrigliaTile[j, i] = global::Tile.TileType.Muro_Indistruttibile;
+                    SpawnTile(i, j, global::Tile.TileType.Muro_Indistruttibile, riga);
                 }
                 else
                 {
@@ -99,11 +88,11 @@ public class GridManager : MonoBehaviour
                         i - j < (righe - 1) - 3 && //Eccetto l'angolo in basso a sinistra
                         i + j < (colonne - 1) + (righe - 1) - 3) //Eccetto l'angolo in basso a destra
                     {
-                        GrigliaTile[j, i] = global::Tile.TileType.Muro_Distruttibile;
+                        SpawnTile(i, j, global::Tile.TileType.Muro_Distruttibile, riga);
                     }
                     else
                     {
-                        GrigliaTile[j, i] = global::Tile.TileType.Pavimento;
+                        SpawnTile(i, j, global::Tile.TileType.Pavimento, riga);
                     }
                 }
 
@@ -111,6 +100,19 @@ public class GridManager : MonoBehaviour
                     indice++;
             }
         }
+    }
+
+    void SpawnTile(int i, int j, Tile.TileType tileType, GameObject riga)
+    {
+        GameObject tile = Instantiate(Tile, new Vector2(j, -i), Quaternion.identity);
+
+        tile.GetComponent<Tile>().ChangeTile(tileType);
+
+        GrigliaTile[j, i] = tile.GetComponent<Tile>();
+
+        tile.name = i + " : " + j;
+
+        tile.transform.SetParent(riga.transform);
     }
 
     int[] CreazionePosOstacoli()

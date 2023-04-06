@@ -10,15 +10,13 @@ public class Tile : MonoBehaviour
     [SerializeField] private Color Pavimento;
     [SerializeField] private Color Muro_Distruttibile;
     [SerializeField] private Color Muro_Indistruttibile;
+    //Per Debug
+    [SerializeField] private Color Player;
 
-    // Start is called before the first frame update
-    void Start()
+    public void ChangeTile(TileType tileType)
     {
-        ColoreTile();
-    }
+        this.tileType = tileType;
 
-    void ColoreTile()
-    {
         switch (tileType)
         {
             case TileType.Pavimento:
@@ -33,12 +31,11 @@ public class Tile : MonoBehaviour
                 GetComponent<SpriteRenderer>().color = Muro_Indistruttibile;
                 break;
 
+            case TileType.Player:
+                GetComponent<SpriteRenderer>().color = Player;
+                break;
+
 
         }
-    }
-
-    private void OnValidate()
-    {
-        ColoreTile();
     }
 }

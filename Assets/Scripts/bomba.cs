@@ -51,15 +51,14 @@ public class bomba : MonoBehaviour
             {
                 switch(direzioni)
                 {
-                    /*
                     case 0:
 
-                        if (griglia[posX, posY + cella].layer == LayerMask.NameToLayer("MuroDistruttibile") 
-                            || griglia[posX, posY + cella].GetComponent<Player>())
+                        if (griglia[posX, posY + cella].tileType == Tile.TileType.Muro_Distruttibile
+                            || griglia[posX, posY + cella].tileType == Tile.TileType.Player)
                         {
                             GridManager.instance.ResetPavimento(posX, posY + cella);
                         }
-                        else if (griglia[posX, posY + cella] == GridManager.instance.Muro_Indistruttibile)
+                        else if (griglia[posX, posY + cella].tileType == Tile.TileType.Muro_Indistruttibile)
                         {
                             cella = range;
                         }
@@ -67,41 +66,41 @@ public class bomba : MonoBehaviour
                         break;
                     case 1:
 
-                        if (griglia[posX, posY - cella].layer == LayerMask.NameToLayer("MuroDistruttibile")
-                            || griglia[posX, posY - cella].GetComponent<Player>())
+                        if (griglia[posX, posY - cella].tileType == Tile.TileType.Muro_Distruttibile
+                            || griglia[posX, posY - cella].tileType == Tile.TileType.Player)
                         {
                             GridManager.instance.ResetPavimento(posX, posY - cella);
                         }
-                        else if (griglia[posX, posY - cella] == GridManager.instance.Muro_Indistruttibile)
+                        else if (griglia[posX, posY - cella].tileType == Tile.TileType.Muro_Indistruttibile)
                         {
                             cella = range;
                         }
                         break;
                     case 2:
 
-                        if (griglia[posX + cella, posY].layer == LayerMask.NameToLayer("MuroDistruttibile")
-                            || griglia[posX + cella, posY].GetComponent<Player>())
+                        if (griglia[posX + cella, posY].tileType == Tile.TileType.Muro_Distruttibile
+                            || griglia[posX + cella, posY].tileType == Tile.TileType.Player)
                         {
                             GridManager.instance.ResetPavimento(posX + cella, posY);
                         }
-                        else if (griglia[posX + cella, posY] == GridManager.instance.Muro_Indistruttibile)
+                        else if (griglia[posX + cella, posY].tileType == Tile.TileType.Muro_Indistruttibile)
                         {
                             cella = range;
                         }
                         break;
                     case 3:
 
-                        if (griglia[posX - cella, posY].layer == LayerMask.NameToLayer("MuroDistruttibile")
-                            || griglia[posX - cella, posY].GetComponent<Player>())
+                        if (griglia[posX - cella, posY].tileType == Tile.TileType.Muro_Distruttibile 
+                            || griglia[posX - cella, posY].tileType == Tile.TileType.Player)
                         {
                             GridManager.instance.ResetPavimento(posX - cella, posY);
                         }
-                        else if (griglia[posX - cella, posY] == GridManager.instance.Muro_Indistruttibile)
+                        else if (griglia[posX - cella, posY].tileType == Tile.TileType.Muro_Indistruttibile)
                         {
                             cella = range;
                         }
                         break;
-                        */
+                        
                 }
             }
         }
