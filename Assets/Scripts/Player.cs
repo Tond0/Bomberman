@@ -54,7 +54,11 @@ public class Player : MonoBehaviour
     void SetNewPosition()
     {
         griglia.GrigliaTile[x + destinazione.x, y - destinazione.y].ChangeTile(Tile.TileType.Player);
-        griglia.GrigliaTile[x, y].ChangeTile(Tile.TileType.Pavimento);
+
+        if(griglia.GrigliaTile[x, y].tileType != Tile.TileType.PlayerSuBomba)
+            griglia.GrigliaTile[x, y].ChangeTile(Tile.TileType.Pavimento);
+        else
+            griglia.GrigliaTile[x, y].ChangeTile(Tile.TileType.Bomba);
 
         x += destinazione.x;
         y -= destinazione.y;
@@ -72,12 +76,12 @@ public class Player : MonoBehaviour
 
     public void Raccolta_Input_PlaceBomb(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (ctx.performed && !moving)
         {
             GameObject bomba = Instantiate(bombaPrefab, transform.position, Quaternion.Euler(0, 0, 45));
             bomba.GetComponent<bomba>().posX = x;
             bomba.GetComponent<bomba>().posY = y;
-            griglia.GrigliaTile[x, y].ChangeTile(Tile.TileType.Bomba);
+            griglia.GrigliaTile[x, y].ChangeTile(Tile.TileType.PlayerSuBomba);
         }
     }
 }

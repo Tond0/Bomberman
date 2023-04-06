@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    public enum TileType { Pavimento, Muro_Distruttibile, Muro_Indistruttibile, Player, Bomba }
+    public enum TileType { Pavimento, Muro_Distruttibile, Muro_Indistruttibile, Player, Bomba, PlayerSuBomba, Nemico }
     public TileType tileType;
 
     [SerializeField] private Color Pavimento;

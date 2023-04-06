@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 3
-  previewTime: 3
+  previewTime: 1
   previewWarnings: 3
   posX: 0
   posY: 0

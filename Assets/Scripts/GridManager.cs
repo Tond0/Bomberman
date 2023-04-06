@@ -149,8 +149,9 @@ public class GridManager : MonoBehaviour
         return posEstratte;
     }
 
-    public void ResetPavimento(int x, int y)
+    //Funzione che verrà richiamata per cambiare il tipo di una tile.
+    public void ChangeTile(int x, int y, Tile.TileType tileType)
     {
-        //GrigliaTile[x, y].SetActive(false);
+        GrigliaTile[x, y].ChangeTile(tileType);
     }
 }
