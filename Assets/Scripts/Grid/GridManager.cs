@@ -1,10 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Net.Http.Headers;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
@@ -23,7 +19,10 @@ public class GridManager : MonoBehaviour
 
     [Header("Impostazioni Giocatore")]
     [SerializeField] private GameObject Giocatore;
-    [Tooltip("La posizione della matrice in cui il giocatore spawnerà")] public Vector2Int PosizioneSpawn;
+
+    [Header("Impostazioni Nemici")]
+    [SerializeField] private GameObject Nemico;
+    private Vector2Int[] CoordinateSpawnsNemici = new Vector2Int[] { new Vector2Int(1, -(righe - 2)), new Vector2Int(colonne - 2, -1) , new Vector2Int(colonne - 2, -(righe- 2)) };
 
     ////////////////////////////////////////
     public static GridManager instance;
@@ -47,17 +46,27 @@ public class GridManager : MonoBehaviour
         CreazioneMappa();
 
         SpawnGiocatore();
+
+        SpawnNemici();
     }
 
     void SpawnGiocatore()
     {
-        GameObject player = Instantiate(Giocatore, new Vector2(PosizioneSpawn.x, - PosizioneSpawn.y), Quaternion.identity);
-        
-        player.GetComponent<Player>().griglia = this;
+        GameObject player = Instantiate(Giocatore, new Vector2(1, -1), Quaternion.identity);
+        player.GetComponent<Entity>().posAttuale = new Vector2Int(1, 1);
 
-        GrigliaTile[PosizioneSpawn.y, PosizioneSpawn.x].ChangeTile(global::Tile.TileType.Player);
+        GrigliaTile[1,1].ChangeTile(global::Tile.TileType.Player);
+    }
 
-        Debug.Log(GrigliaTile[PosizioneSpawn.y, PosizioneSpawn.x]);
+
+    void SpawnNemici()
+    {
+        for (int i = 0; i < CoordinateSpawnsNemici.Length; i++)
+        {
+            GameObject nemico = Instantiate(Nemico, (Vector2)CoordinateSpawnsNemici[i], Quaternion.identity);
+            GrigliaTile[(int)CoordinateSpawnsNemici[i].x, -(int)CoordinateSpawnsNemici[i].y].ChangeTile(global::Tile.TileType.Nemico);
+            nemico.GetComponent<Entity>().posAttuale = new Vector2Int(CoordinateSpawnsNemici[i].x, -CoordinateSpawnsNemici[i].y);
+        }
     }
 
     void CreazioneMappa()

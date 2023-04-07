@@ -236,10 +236,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tile: {fileID: 388759571026480937, guid: 474a31d75985f50459ae29a164b762cf, type: 3}
-  quantita_ostacoli_minima: 15
+  quantita_ostacoli_minima: 11
   quantita_ostacoli_massima: 15
   Giocatore: {fileID: 8116432295702884820, guid: f5cfbbb8676d4d2489ab05ea651e437c, type: 3}
-  PosizioneSpawn: {x: 1, y: 1}
+  Nemico: {fileID: 8116432295702884820, guid: ec66078a322030947b9fbc335fb72f99, type: 3}
 --- !u!4 &1151867353
 Transform:
   m_ObjectHideFlags: 0

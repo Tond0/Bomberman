@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8116432295702884822}
   - component: {fileID: 8116432295702884821}
-  - component: {fileID: 8116432295702884840}
-  - component: {fileID: 8116432295702884823}
+  - component: {fileID: 4802181330409279658}
   m_Layer: 0
   m_Name: Giocatore
   m_TagString: Untagged
@@ -84,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8116432295702884840
+--- !u!114 &4802181330409279658
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,74 +92,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8116432295702884820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Script: {fileID: 11500000, guid: a2e1fc4d9bb185e4aa80115ff39ae87c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 72a963ccd1bebe54a8492962f76d1dc7, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8116432295702884823}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: Raccolta_Input_Movimento
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 542ccf53-267b-4868-b62a-a6bd7f1018a5
-    m_ActionName: Gameplay/Movimento[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8116432295702884823}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: Raccolta_Input_PlaceBomb
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 4e1496bb-c0e5-4b01-afbd-3bb0361ca6d2
-    m_ActionName: Gameplay/PlaceBomb[/Keyboard/space]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Gameplay
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!114 &8116432295702884823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8116432295702884820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 337178d03b87e06459ba6b7a40d89fbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 8
-  movimento: {x: 0, y: 0}
-  griglia: {fileID: 0}
-  x: 0
-  y: 0
+  speed: 10
+  tipoEntita: 0
+  posAttuale: {x: 0, y: 0}
   bombaPrefab: {fileID: 7637536710966232317, guid: dc6ad63f279d29c42b220d40e2617c8c, type: 3}
