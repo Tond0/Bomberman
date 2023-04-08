@@ -7,11 +7,11 @@ public class Tile : MonoBehaviour
     public enum TileType { Pavimento, Muro_Distruttibile, Muro_Indistruttibile, Player, Bomba, PlayerSuBomba, Nemico }
     public TileType tileType;
 
+    [HideInInspector] public GameObject entityOnTile;
+
     [SerializeField] private Color Pavimento;
     [SerializeField] private Color Muro_Distruttibile;
     [SerializeField] private Color Muro_Indistruttibile;
-    //Per Debug
-    [SerializeField] private Color Player;
 
     public void ChangeTile(TileType tileType)
     {
@@ -30,11 +30,6 @@ public class Tile : MonoBehaviour
             case TileType.Muro_Indistruttibile:
                 GetComponent<SpriteRenderer>().color = Muro_Indistruttibile;
                 break;
-
-            case TileType.Player:
-                GetComponent<SpriteRenderer>().color = Player;
-                break;
-
 
         }
     }

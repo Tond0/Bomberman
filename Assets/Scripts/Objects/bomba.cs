@@ -10,7 +10,6 @@ public class bomba : MonoBehaviour
     [SerializeField] private float previewWarnings;
 
     private Sequence sequenzaAnimazioneBomba;
-    private Sequence sequenzaAnimazioneEsplosione;
 
     [HideInInspector] public int posX;
     [HideInInspector] public int posY;
@@ -47,7 +46,7 @@ public class bomba : MonoBehaviour
         
         for(int direzioni = 0; direzioni < 4; direzioni++)
         {
-            for(int cella = 1; cella <  range + 1; cella++)
+            for(int cella = 0; cella <  range + 1; cella++)
             {
                 switch (direzioni)
                 {
@@ -96,17 +95,37 @@ public class bomba : MonoBehaviour
             //GameOver
 
             case Tile.TileType.Player:
-                GridManager.instance.ChangeTile(x, y, Tile.TileType.Pavimento);
+                GameManager.instance.GameLost();
                 break;
 
             case Tile.TileType.PlayerSuBomba:
-                GridManager.instance.ChangeTile(x, y, Tile.TileType.Pavimento);
+                GameManager.instance.GameLost();
                 break;
 
 
 
             case Tile.TileType.Nemico:
-                GridManager.instance.ChangeTile(x, y, Tile.TileType.Pavimento);
+
+                //Cerca tutti i nemici
+                foreach (Entity entity in FindObjectsOfType<Entity>())
+                {
+                    //Il nemico più vicino al punto dell'esplosione (che sia a distanza di quasi una casella
+                    if (Vector2.Distance(entity.transform.position, new Vector2(x, -y)) < range - 0.1f)
+                    {
+                        //Ci sono altri nemici?
+                        GameManager.instance.CheckIfWon();
+
+                        //Distruggiamo il nemico 
+                        Destroy(entity.gameObject);
+
+                        //Ora il tassello sarà attraversabile
+                        GridManager.instance.ChangeTile(x, y, Tile.TileType.Pavimento);
+
+
+                        break;
+                    }
+                }
+
                 break;
 
             case Tile.TileType.Muro_Indistruttibile:

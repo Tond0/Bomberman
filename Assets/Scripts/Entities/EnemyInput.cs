@@ -16,5 +16,6 @@ public class EnemyInput : IMovement
             movimento = new Vector2Int(direzione, 0);
         else
             movimento = new Vector2Int(0, direzione);
+        
     }
 }
