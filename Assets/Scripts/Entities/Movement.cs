@@ -41,7 +41,9 @@ public class Movement
     {
         var OggettoNextPosition = GridManager.instance.GrigliaTile[entity.posAttuale.x + direzione.x, entity.posAttuale.y - direzione.y].tileType;
 
-        if (OggettoNextPosition == Tile.TileType.Pavimento)
+        if (OggettoNextPosition == Tile.TileType.Pavimento
+            || OggettoNextPosition == Tile.TileType.Player
+                || OggettoNextPosition == Tile.TileType.Nemico)
         {
             if (OggettoNextPosition == Tile.TileType.Player
                 || OggettoNextPosition == Tile.TileType.Nemico)

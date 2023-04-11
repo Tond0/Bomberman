@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using DG.Tweening;
-using UnityEditor;
 using System;
 
 public class Entity : MonoBehaviour
@@ -13,7 +8,7 @@ public class Entity : MonoBehaviour
     public enum EntityType { Giocatore, Nemico }
     public EntityType tipoEntita;
 
-     public Vector2Int posAttuale;
+    public Vector2Int posAttuale;
 
     public Movement entityMovement;
 
